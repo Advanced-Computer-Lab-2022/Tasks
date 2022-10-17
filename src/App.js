@@ -9,7 +9,7 @@ const MongoURI = '' ;
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
-const user = require('./models/User');
+const user = require('./Models/User');
 // #Importing the userController
 
 
