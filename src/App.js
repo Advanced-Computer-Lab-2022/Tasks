@@ -9,7 +9,7 @@ const MongoURI = '' ;
 //App variables
 const app = express();
 const port = process.env.PORT || "8000";
-const User = require('./models/User');
+const user = require('./models/User');
 // #Importing the userController
 
 
@@ -17,7 +17,7 @@ const User = require('./models/User');
 // Mongo DB
 mongoose.connect(MongoURI)
 .then(()=>{
-  console.log("MongoDB is now connected")
+  console.log("MongoDB is now connected!")
 // Starting server
  app.listen(port, () => {
     console.log(`Listening to requests on http://localhost:${port}`);
@@ -27,11 +27,11 @@ mongoose.connect(MongoURI)
 /*
                                                     Start of your code
 */
-app.get("/Home", (req, res) => {
-    res.status(200).send("You have everything installed !");
+app.get("/home", (req, res) => {
+    res.status(200).send("You have everything installed!");
   });
 
-// #Routing to usercontroller here
+// #Routing to userController here
 
 
 
