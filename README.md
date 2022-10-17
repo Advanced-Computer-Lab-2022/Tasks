@@ -3,7 +3,7 @@
 * Make sure that you have **vs code** installed.
 * Make sure that you have **node** installed.
 * Make sure that you have **Postman** installed.
-* Clone the repositery to your laptop.
+* Clone the repository to your laptop.
 * Make sure that the server is running with all installations.
 # Testing
 ### - After Cloning the repo, open the source directory.
