@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ahmedalaaseif/ACL_Tasks.git"
+    "url": "git+https://github.com/Advanced-Computer-Lab-2022/Task_1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ahmedalaaseif/ACL_Tasks/issues"
+    "url": "https://github.com/Advanced-Computer-Lab-2022/Task_1/issues"
   },
-  "homepage": "https://github.com/ahmedalaaseif/ACL_Tasks#readme",
+  "homepage": "https://github.com/Advanced-Computer-Lab-2022",
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^6.0.11",
