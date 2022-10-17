@@ -2,7 +2,7 @@
   "name": "acl_tasks",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ahmedalaaseif/ACL_Tasks#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^6.0.11"
+    "mongoose": "^6.0.11",
+    "nodemon": "^2.0.20"
   }
 }

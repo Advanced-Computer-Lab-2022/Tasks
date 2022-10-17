@@ -2,7 +2,8 @@
 const express = require("express");
 const mongoose = require('mongoose');
 // THIS IS WRONG NEVER DO THAT !! Only for the task we put the DB Link here!! NEVER DO THAAAT AGAIN !!
-const MongoURI = 'mongodb+srv://alaa:1234@cluster0.6ulyk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority' ;
+//Check db connection links in README file
+const MongoURI = '' ;
 
 
 //App variables
@@ -14,10 +15,15 @@ const User = require('./models/User');
 
 // configurations
 // Mongo DB
-mongoose.connect(MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(result =>console.log("MongoDB is now connected") )
+mongoose.connect(MongoURI)
+.then(()=>{
+  console.log("MongoDB is now connected")
+// Starting server
+ app.listen(port, () => {
+    console.log(`Listening to requests on http://localhost:${port}`);
+  })
+})
 .catch(err => console.log(err));
-
 /*
                                                     Start of your code
 */
@@ -34,7 +40,3 @@ app.get("/Home", (req, res) => {
                                                     End of your code
 */
 
-// Starting server
-app.listen(port, () => {
-    console.log(`Listening to requests on http://localhost:${port}`);
-  });
