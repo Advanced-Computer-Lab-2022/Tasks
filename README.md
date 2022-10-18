@@ -47,7 +47,7 @@ Noha's grps:
 
 Nada's grps:
  ```
- mongodb+srv://nadahesham:test1234@cluster0.5uvnx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+ mongodb+srv://atlasDB:atlasDB@cluster0.vt5cm.mongodb.net/test
 ```
 
 ### **DO NOT COMMIT TO THIS REPO**
