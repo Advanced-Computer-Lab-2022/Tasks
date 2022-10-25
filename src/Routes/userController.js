@@ -48,20 +48,9 @@ const filterBlog = async(req,res) => {
     }
 }
 
-// 
-const editBlog = async(req, res) => {
-    // get id from url /:id
-    const { id } = req.params
 
-    if(id){
-        const {title,body} = req.body;
-        console.log(title, body);
-        const result = await blogModel.findByIdAndUpdate(id,{title,body},{new:true}); // new true to return the updated document
-        res.status(200).json(result)
-    }
-    else{
-        res.status(400).json({error:"blogId is required"})
-    }
+const editBlog = async(req, res) => {
+   
 }
 
 
