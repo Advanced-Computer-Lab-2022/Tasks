@@ -3,9 +3,9 @@ const express = require("express");
 const mongoose = require('mongoose');
 // THIS IS WRONG NEVER DO THAT !! Only for the task we put the DB Link here!! NEVER DO THAAAT AGAIN !!
 //Check db connection links in README file
-const MongoURI = 'mongodb+srv://Hadwa:hadwa1996@cluster0.hpstsct.mongodb.net/?retryWrites=true&w=majority' ;
-
-const {createUser, getUsers}= require('./Routes/userController')
+// const MongoURI = 'mongodb+srv://Hadwa:hadwa1996@cluster0.hpstsct.mongodb.net/?retryWrites=true&w=majority' ;
+const MongoURI = 'mongodb://localhost:27017'
+const {createUser, getUsers, createBlog, filterBlog, editBlog}= require('./Routes/userController')
 
 
 //App variables
@@ -38,6 +38,10 @@ app.post("/addUser",createUser);
 app.get('/users', getUsers);
 // #Routing to userController here
 
+app.post("/addBlog",createBlog);
+// app.post('/createAuthor',createAuthor);
+app.get('/filter',filterBlog);
+app.patch('/editBlog/:id',editBlog);
 
 
 /*
