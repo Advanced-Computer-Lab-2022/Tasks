@@ -2,8 +2,6 @@
 const userModel = require('../Models/User');
 const blogModel = require('../Models/Blog');
 const { default: mongoose } = require('mongoose');
-// const authorModel = require('../Models/Author');
-// const mongoose = require('mongoose');
 
 const createUser = async(req,res) => {
     const{name, email} = req.body;
@@ -27,6 +25,11 @@ const getUsers = async (req, res) => {
 
 // create blog
 const createBlog = async(req,res) => {
+    /*
+    1- get the title and body and authorId from the request body
+    2- create a new blog with the title, body and authorId
+    3- send the new blog as a response
+    */
     const{title,body,authorId} = req.body;
     try{
         const blog = await blogModel.create({title,body,authorId});
@@ -38,6 +41,11 @@ const createBlog = async(req,res) => {
 
 // filter blogs by author
 const filterBlog = async(req,res) => {
+    /*
+    1- get the author id from the request query
+    2- find all the blogs that have the same author id
+    3- send the blogs as a response
+    */
     const userId = req.query.userId;
     // check if userId is not empty
     if(userId){
@@ -50,7 +58,13 @@ const filterBlog = async(req,res) => {
 
 
 const editBlog = async(req, res) => {
-   
+   // TODO : edit the blog
+   /*
+    1- get the blog id from the request params
+    2- get the new title and body from the request body
+    3- update the blog with the new title and body
+    4- send the updated blog as a response
+    */
 }
 
 
