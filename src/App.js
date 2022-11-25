@@ -2,10 +2,16 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+require('dotenv').config()
+const { requireAuth } = require('./Middleware/authMiddleware');
+
+
 // THIS IS WRONG NEVER DO THAT !! Only for the task we put the DB Link here!! NEVER DO THAAAT AGAIN !!
 //Check db connection links in README file
 const MongoURI = 'mongodb+srv://Hadwa:hadwa1996@cluster0.hpstsct.mongodb.net/?retryWrites=true&w=majority' ;
-const {createUser, getUsers, createBlog, filterBlog, editBlog, getBlogs}= require('./Controller/userController')
+const {getUsers, createBlog, filterBlog, editBlog, getBlogs, login, signUp, logout}= require('./Controller/userController')
 
 
 //App variables
@@ -31,11 +37,16 @@ app.get("/home", (req, res) => {
     res.status(200).send("You have everything installed!");
   });
 
-app.use(express.json())
-app.post("/addUser",createUser);
+app.use(express.json());
+app.use(cookieParser());
+//login route
+app.post("/signup", signUp);
+app.post('/login', login)
+app.get('/logout', logout);
+
 app.get('/users', getUsers);
 
-app.get('/blogs', getBlogs);
+app.get('/blogs', requireAuth, getBlogs);
 app.post("/addBlog",createBlog);
 app.get('/filter',filterBlog);
 // TODO : add the editBlog route here

@@ -2,16 +2,59 @@
 const userModel = require('../Models/User');
 const blogModel = require('../Models/Blog');
 const { default: mongoose } = require('mongoose');
+const express = require("express");
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
-const createUser = async(req,res) => {
-    const{name, email} = req.body;
+
+// create json web token
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, 'supersecret', {
+    expiresIn: maxAge
+  });
+};
+
+const signUp = async(req,res) => {
+    const{name, email, password} = req.body;
     try{
-        const user = await userModel.create({name, email});
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const user = await userModel.create({name : name, email : email,password: hashedPassword});
+        const token = createToken(user.name);
+        
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(200).json(user)
     }catch(error){
         res.status(400).json({error:error.message})
     }
 }
+
+const login = async (req, res) => {
+    //console.log(req.body.name);
+    const user = await userModel.findOne({name:req.body.name});
+    //console.log(user);
+    if (user == null) {
+      return res.status(400).send('Cannot find user')
+    }
+    try {
+      if(await bcrypt.compare(req.body.password, user.password)) {
+        const token = createToken(user.name);
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(200).json({ user: user });
+      } else 
+        res.send('Not Allowed')
+      }
+     catch(error) {
+      res.status(500).send({error:error.message} )
+    }
+  }
+
+  const logout = async (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.status(200).json({message:"logout successfully"})
+    }
+
 
 const getUsers = async (req, res) => {
     const users = await userModel.find({}).sort({createdAt: -1})
@@ -77,4 +120,4 @@ const editBlog = async(req, res) => {
 }
 
 
-module.exports = {createUser, getUsers, createBlog, filterBlog, editBlog, getBlogs};
+module.exports = {signUp, logout, getUsers, createBlog, filterBlog, editBlog, getBlogs, login};
