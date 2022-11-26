@@ -9,8 +9,8 @@ const jwt = require('jsonwebtoken');
 
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-    return jwt.sign({ id }, 'supersecret', {
+const createToken = (name) => {
+    return jwt.sign({ name }, 'supersecret', {
         expiresIn: maxAge
     });
 };
