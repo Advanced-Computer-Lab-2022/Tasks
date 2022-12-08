@@ -9,8 +9,8 @@ const jwt = require('jsonwebtoken');
 
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-  return jwt.sign({ id }, 'supersecret', {
+const createToken = (name) => {
+  return jwt.sign({ name }, 'supersecret', {
     expiresIn: maxAge
   });
 };
@@ -21,8 +21,8 @@ const signUp = async(req,res) => {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(password, salt);
         const user = await userModel.create({name : name, email : email,password: hashedPassword});
+
         const token = createToken(user.name);
-        
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(200).json(user)
     }catch(error){
@@ -66,7 +66,13 @@ const getUsers = async (req, res) => {
     res.status(200).json(users)
   }
 
-// create blog
+// get user by id
+const getUserById = async (req, res) => {
+    const user = await userModel.findById(req.params.id)
+    res.status(200).json(user)
+}
+
+  // create blog
 const createBlog = async(req,res) => {
     /*
     1- get the title and body and authorId from the request body
@@ -109,15 +115,6 @@ const filterBlog = async(req,res) => {
 }
 
 
-const editBlog = async(req, res) => {
-   // TODO : edit the blog
-   /*
-    1- get the blog id from the request params
-    2- get the new title and body from the request body
-    3- update the blog with the new title and body
-    4- send the updated blog as a response
-    */
-}
 
 
-module.exports = {signUp, logout, getUsers, createBlog, filterBlog, editBlog, getBlogs, login};
+module.exports = {signUp, logout, getUsers, createBlog, filterBlog, getBlogs, login,getUserById};

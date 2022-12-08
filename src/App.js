@@ -11,7 +11,7 @@ const { requireAuth } = require('./Middleware/authMiddleware');
 // THIS IS WRONG NEVER DO THAT !! Only for the task we put the DB Link here!! NEVER DO THAAAT AGAIN !!
 //Check db connection links in README file
 const MongoURI = 'mongodb+srv://Hadwa:hadwa1996@cluster0.hpstsct.mongodb.net/?retryWrites=true&w=majority' ;
-const {getUsers, createBlog, filterBlog, editBlog, getBlogs, login, signUp, logout}= require('./Controller/userController')
+const {getUsers, createBlog, filterBlog, editBlog, getBlogs, login, signUp, logout,getUserById}= require('./Controller/userController')
 
 
 //App variables
@@ -44,13 +44,18 @@ app.post("/signup", signUp);
 app.post('/login', login)
 app.get('/logout', logout);
 
-app.get('/users', getUsers);
 
 app.get('/blogs', requireAuth, getBlogs);
+
+app.get('/users', getUsers);
 app.post("/addBlog",createBlog);
 app.get('/filter',filterBlog);
+app.get('/users/:id',getUserById);
 // TODO : add the editBlog route here
 
 /*
                                                     End of your code
 */
+// default export App.js
+module.exports = app;
+
