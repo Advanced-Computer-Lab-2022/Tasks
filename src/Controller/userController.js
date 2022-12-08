@@ -30,40 +30,11 @@ const signUp = async(req,res) => {
     }
 }
 
-const login = async (req, res) => {
-    //console.log(req.body.name);
-    const user = await userModel.findOne({name:req.body.name});
-    //console.log(user);
-    if (user == null) {
-      return res.status(400).send('Cannot find user')
-    }
-    try {
-      if(await bcrypt.compare(req.body.password, user.password)) {
-        const token = createToken(user.name);
-        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(200).json({ user: user });
-      } else 
-        res.send('Not Allowed')
-      }
-     catch(error) {
-      res.status(500).send({error:error.message} )
-    }
-  }
-
-  const logout = async (req, res) => {
-    res.cookie('jwt', '', { maxAge: 1 });
-    res.status(200).json({message:"logout successfully"})
-    }
 
 
 const getUsers = async (req, res) => {
-    const users = await userModel.find({}).sort({createdAt: -1})
-  
-    // for (let index = 0; index < users.length; index++) {
-    //     const element = users[index];
-    //     console.log(element.id);
-    //}
-    res.status(200).json(users)
+    const allUsers = await userModel.find({}).sort({createdAt: -1})
+    res.status(200).json(allUsers)
   }
 
 // get user by id
@@ -72,49 +43,7 @@ const getUserById = async (req, res) => {
     res.status(200).json(user)
 }
 
-  // create blog
-const createBlog = async(req,res) => {
-    /*
-    1- get the title and body and authorId from the request body
-    2- create a new blog with the title, body and authorId
-    3- send the new blog as a response
-    */
-    const{title,body,author} = req.body;
-    try{
-        const blog = await blogModel.create({title,body,author});
-        res.status(200).json(blog)
-    }catch(error){
-        res.status(400).json({error:error.message})
-    }
-}
-// get blogs
-const getBlogs = async (req, res) => {
-    const blogs = await blogModel.find({}).sort({createdAt: -1})
-  
-    // for (let index = 0; index < blogs.length; index++) {
-    //     const element = blogs[index];
-    //     console.log(element.id);
-    //}
-    res.status(200).json(blogs)
-  }
-// filter blogs by author
-const filterBlog = async(req,res) => {
-    /*
-    1- get the author id from the request query
-    2- find all the blogs that have the same author id
-    3- send the blogs as a response
-    */
-    const userId = req.query.userId;
-    // check if userId is not empty
-    if(userId){
-    const result = await blogModel.find({author:mongoose.Types.ObjectId(userId)}).populate('author');
-    res.status(200).json(result)
-    }else{
-        res.status(400).json({error:"userId is required"})
-    }
-}
 
 
 
-
-module.exports = {signUp, logout, getUsers, createBlog, filterBlog, getBlogs, login,getUserById};
+module.exports = {signUp,getUsers,getUserById};

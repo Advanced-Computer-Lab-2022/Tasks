@@ -12,7 +12,7 @@ beforeEach(async () => {
   await mongoose.connection.close();
 
 });   
-// test get all users
+/* Test for getting  user by id. */
 describe("GET users/:id", () => {
     test("Get user by Id", (done) => {
       request(app)
@@ -28,28 +28,8 @@ describe("GET users/:id", () => {
     });
   });
 
-// test create a new user
-describe("POST /signup", () => {
-    test("It should create a new user", (done) => {
-      request(app)
-        .post("/signup")
-        .send({
-          email: "user@test.com",
-          password: "123456",
-          name: "Test User",
-        })
-        .expect(200)
-        .expect((res) => {
-          res.body.name = "Test User";
-          res.body.email = "user@test.com"
-        }
-        )
-        .end((err, res) => {
-          if (err) return done(err);
-          return done();
-        }
-        );
-    });
-  });
+
+/* Test for creating a new user. */
+
           
 
